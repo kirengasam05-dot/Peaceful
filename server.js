@@ -42,21 +42,40 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'peacefulnights2025';
 
 const store = createStore({ dataDir: DATA_DIR });
 
-/* ---------- Auth (simple bearer tokens, kept in memory) ---------- */
-const tokens = new Map(); // token -> expiry timestamp
+/* ---------- Auth (stateless signed tokens) ----------
+   Tokens are signed with a secret (HMAC), so any server process
+   can validate them without shared memory. This survives Render
+   restarts, redeploys, and multiple instances — which is what
+   caused the "session expired" errors with in-memory tokens. */
 const TOKEN_TTL = 1000 * 60 * 60 * 8; // 8 hours
+// Stable secret so tokens stay valid across restarts. Defaults to
+// the admin password if SESSION_SECRET isn't set.
+const SESSION_SECRET = process.env.SESSION_SECRET || ('pn-' + ADMIN_PASSWORD);
+
+function sign(data) {
+  return crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+}
 
 function issueToken() {
-  const token = crypto.randomBytes(24).toString('hex');
-  tokens.set(token, Date.now() + TOKEN_TTL);
-  return token;
+  const payload = Buffer.from(JSON.stringify({ exp: Date.now() + TOKEN_TTL })).toString('base64url');
+  return `${payload}.${sign(payload)}`;
 }
+
 function isValidToken(token) {
-  const expiry = tokens.get(token);
-  if (!expiry) return false;
-  if (expiry < Date.now()) { tokens.delete(token); return false; }
-  return true;
+  const [payload, sig] = String(token).split('.');
+  if (!payload || !sig) return false;
+  const expected = sign(payload);
+  // constant-time comparison
+  if (sig.length !== expected.length) return false;
+  if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return false;
+  try {
+    const { exp } = JSON.parse(Buffer.from(payload, 'base64url').toString());
+    return typeof exp === 'number' && exp > Date.now();
+  } catch {
+    return false;
+  }
 }
+
 function requireAuth(req, res, next) {
   const token = (req.headers.authorization || '').replace(/^Bearer\s+/i, '');
   if (!isValidToken(token)) {
