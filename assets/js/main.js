@@ -62,9 +62,10 @@ function formatDate(iso) {
 // Resolve a possibly-relative asset path against BASE.
 function asset(path) {
   if (!path) return '';
-  if (/^(https?:)?\/\//.test(path)) return path;
-  if (path.startsWith('/')) return path;
-  return `${BASE}${path}`;
+  if (path.startsWith('data:')) return path;        // uploaded image (base64)
+  if (/^(https?:)?\/\//.test(path)) return path;    // absolute URL
+  if (path.startsWith('/')) return path;            // root-relative
+  return `${BASE}${path}`;                           // relative to the site
 }
 
 function imageMarkup(path, alt) {
