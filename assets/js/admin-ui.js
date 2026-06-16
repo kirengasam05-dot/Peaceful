@@ -126,8 +126,11 @@ function closeProductEditor() {
 async function saveProductFromForm() {
   const title = document.getElementById('p-title').value.trim();
   if (!title) { alert('Please enter a title'); return; }
+  const editing = _editingProductIdx >= 0;
   const product = {
-    id: _editingProductIdx >= 0 ? _products.products[_editingProductIdx].id : uid('product'),
+    // Editing keeps the existing id. New products send NO id, so the
+    // server assigns a guaranteed-unique one (prevents overwrites).
+    ...(editing ? { id: _products.products[_editingProductIdx].id } : {}),
     title,
     tagline: document.getElementById('p-tagline').value.trim(),
     description: document.getElementById('p-description').value.trim(),

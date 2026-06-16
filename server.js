@@ -124,7 +124,9 @@ app.post('/api/products', requireAuth, wrap(async (req, res) => {
   if (!product.title || !String(product.title).trim()) {
     return res.status(400).json({ error: 'A product title is required.' });
   }
-  if (!product.id) product.id = 'product-' + crypto.randomBytes(4).toString('hex');
+  if (!product.id || !String(product.id).trim()) {
+    product.id = 'product-' + Date.now().toString(36) + '-' + crypto.randomBytes(4).toString('hex');
+  }
   await store.upsert(product);
   res.json(product);
 }));
