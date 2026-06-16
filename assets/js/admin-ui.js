@@ -39,8 +39,19 @@ function initAdminUI() {
 let _products = null;
 let _editingProductIdx = -1;
 
+async function loadProductsFromServer() {
+  try {
+    const res = await fetch('../data/products.json', { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      return { products: data.products || [] };
+    }
+  } catch {}
+  return { products: [] };
+}
+
 async function initProductsUI() {
-  _products = await fetchJSONData('products') || { products: [] };
+  _products = await loadProductsFromServer();
   renderProductsList();
 
   document.getElementById('add-product').addEventListener('click', () => openProductEditor(-1));
@@ -103,7 +114,7 @@ function closeProductEditor() {
   _editingProductIdx = -1;
 }
 
-function saveProductFromForm() {
+async function saveProductFromForm() {
   const title = document.getElementById('p-title').value.trim();
   if (!title) { alert('Please enter a title'); return; }
   const product = {
@@ -123,26 +134,32 @@ function saveProductFromForm() {
     }
   };
 
-  // If "featured" was checked, unflag others
-  if (product.featured) {
-    _products.products.forEach(p => p.featured = false);
+  const saveBtn = document.getElementById('save-product');
+  saveBtn.disabled = true;
+  try {
+    await apiSend('POST', '../api/products', product);
+    _products = await loadProductsFromServer(); // refresh from the database
+    renderProductsList();
+    closeProductEditor();
+    showToast('Product saved — it is now live on your site');
+  } catch (err) {
+    if (err.message !== 'unauthorized') alert('Could not save: ' + err.message);
+  } finally {
+    saveBtn.disabled = false;
   }
-
-  if (_editingProductIdx >= 0) {
-    _products.products[_editingProductIdx] = product;
-  } else {
-    _products.products.push(product);
-  }
-  saveJSONData('products', _products);
-  renderProductsList();
-  closeProductEditor();
 }
 
-function deleteProduct(idx) {
+async function deleteProduct(idx) {
   if (!confirm('Delete this product?')) return;
-  _products.products.splice(idx, 1);
-  saveJSONData('products', _products);
-  renderProductsList();
+  const product = _products.products[idx];
+  try {
+    await apiSend('DELETE', '../api/products/' + encodeURIComponent(product.id));
+    _products = await loadProductsFromServer();
+    renderProductsList();
+    showToast('Product deleted');
+  } catch (err) {
+    if (err.message !== 'unauthorized') alert('Could not delete: ' + err.message);
+  }
 }
 
 /* ---------- BLOG ---------- */

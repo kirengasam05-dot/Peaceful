@@ -1,8 +1,18 @@
 services:
   - type: web
     name: peaceful-nights-guide
-    runtime: static
-    # Plain HTML/CSS/JS site — there is nothing to compile.
-    buildCommand: ""
-    # Serve the files straight from the repo root.
-    staticPublishPath: .
+    runtime: node
+    plan: starter            # a paid plan is required for a persistent disk
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: ADMIN_USERNAME
+        sync: false           # set this in the Render dashboard
+      - key: ADMIN_PASSWORD
+        sync: false           # set this in the Render dashboard
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: data
+      mountPath: /var/data    # database file lives here, survives redeploys
+      sizeGB: 1

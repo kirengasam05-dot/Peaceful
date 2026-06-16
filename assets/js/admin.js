@@ -3,10 +3,10 @@
    Simple client-side admin: login, edit JSON, download updates.
    ========================================================= */
 
-// ---- CHANGE THESE CREDENTIALS ----
-const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'peacefulnights2025'; // change after first login!
-// ----------------------------------
+// Admin credentials now live on the SERVER (set ADMIN_USERNAME /
+// ADMIN_PASSWORD as environment variables in Render). The browser
+// no longer holds the password — it logs in against the API and
+// receives a short-lived token.
 
 const SESSION_KEY = 'pn-admin-session';
 const STORAGE_PREFIX = 'pn-admin-data-';
@@ -15,20 +15,58 @@ function isAdminLoggedIn() {
   const s = localStorage.getItem(SESSION_KEY);
   if (!s) return false;
   try {
-    const { expires } = JSON.parse(s);
-    return expires > Date.now();
+    const { expires, token } = JSON.parse(s);
+    return !!token && expires > Date.now();
   } catch { return false; }
 }
 
-function adminLogin(username, password) {
-  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+function getAdminToken() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY))?.token || null; }
+  catch { return null; }
+}
+
+async function adminLogin(username, password) {
+  try {
+    const res = await fetch('../api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    if (!res.ok) return false;
+    const { token } = await res.json();
     localStorage.setItem(SESSION_KEY, JSON.stringify({
       user: username,
+      token,
       expires: Date.now() + 1000 * 60 * 60 * 8 // 8 hours
     }));
     return true;
+  } catch {
+    return false; // server unreachable (e.g. opened without `npm start`)
   }
-  return false;
+}
+
+// Authenticated JSON request to the admin API. Redirects to login
+// if the session has expired.
+async function apiSend(method, url, body) {
+  const res = await fetch(url, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + (getAdminToken() || '')
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (res.status === 401) {
+    showToast('Session expired — please sign in again');
+    setTimeout(() => (location.href = 'login.html'), 1200);
+    throw new Error('unauthorized');
+  }
+  if (!res.ok) {
+    let msg = `Request failed (${res.status})`;
+    try { msg = (await res.json()).error || msg; } catch {}
+    throw new Error(msg);
+  }
+  return res.status === 204 ? null : res.json();
 }
 
 function adminLogout() {
