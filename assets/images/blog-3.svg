@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Common Toddler Sleep Mistakes">
+  <rect width="800" height="500" fill="#FAF7F1"/>
+  <g transform="translate(140 100)">
+    <path d="M 120 0 L 240 200 L 0 200 Z" fill="#D89B3A"/>
+    <text x="120" y="155" text-anchor="middle" font-family="Georgia, serif" font-size="120" font-weight="bold" fill="#1B2240">!</text>
+  </g>
+  <g transform="translate(440 200)">
+    <ellipse cx="140" cy="180" rx="160" ry="20" fill="#1B2240" opacity="0.12"/>
+    <rect x="0" y="80" width="280" height="100" rx="10" fill="#1B2240"/>
+    <rect x="0" y="60" width="60" height="120" rx="6" fill="#1B2240"/>
+    <rect x="220" y="100" width="60" height="80" rx="6" fill="#1B2240"/>
+    <rect x="20" y="100" width="220" height="60" rx="8" fill="#F2E2C4"/>
+    <ellipse cx="70" cy="115" rx="30" ry="10" fill="#FAF7F1"/>
+    <circle cx="70" cy="105" r="14" fill="#FFE9C2"/>
+    <path d="M 130 145 Q 160 125 200 145" stroke="#D89B3A" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

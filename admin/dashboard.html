@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Peaceful Nights Guide</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <a href="dashboard.html" class="brand" style="color: var(--moon);">
+        <span class="brand-mark" style="color: var(--accent);">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><path d="M22 16a8 8 0 0 1-10-10 8 8 0 1 0 10 10z" fill="currentColor"/></svg>
+        </span>
+        <span>Admin</span>
+      </a>
+      <nav>
+        <ul class="admin-nav">
+          <li><a href="#" data-tab="products" class="active">Products</a></li>
+          <li><a href="#" data-tab="blog">Blog</a></li>
+          <li><a href="#" data-tab="settings">Site settings</a></li>
+          <li><a href="#" data-tab="media">Media uploads</a></li>
+          <li><a href="#" data-tab="export">Export & deploy</a></li>
+          <li style="margin-top: 20px;"><a href="../index.html" target="_blank">View site →</a></li>
+          <li><a href="#" id="logout-btn">Sign out</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <!-- PRODUCTS TAB -->
+      <section class="tab-panel" data-panel="products">
+        <h1 style="font-size: 1.8rem;">Products</h1>
+        <p class="muted">Add, edit, and remove your digital guides. Changes save automatically — click <strong>Export</strong> when you want to publish.</p>
+
+        <div class="admin-toolbar">
+          <button class="btn btn-accent btn-sm" id="add-product">+ New product</button>
+          <button class="btn btn-ghost btn-sm" id="export-products">Export products.json</button>
+        </div>
+
+        <div id="products-list" class="admin-list"></div>
+
+        <!-- Product editor (modal-ish inline) -->
+        <div id="product-editor" class="admin-card" style="display:none; margin-top: 24px;">
+          <h2 style="font-size: 1.3rem;">Edit product</h2>
+          <div class="field">
+            <label>Product title</label>
+            <input id="p-title" type="text">
+          </div>
+          <div class="field">
+            <label>Short tagline</label>
+            <input id="p-tagline" type="text">
+            <span class="help">One sentence — shown under the title.</span>
+          </div>
+          <div class="field">
+            <label>Full description</label>
+            <textarea id="p-description"></textarea>
+          </div>
+          <div class="field">
+            <label>Bullet points (one per line)</label>
+            <textarea id="p-bullets"></textarea>
+          </div>
+          <div class="field">
+            <label>Price</label>
+            <input id="p-price" type="text" placeholder="$9.99">
+          </div>
+          <div class="field">
+            <label>Gumroad product URL</label>
+            <input id="p-gumroad" type="url" placeholder="https://peacefulnightsguide.gumroad.com/l/...">
+            <span class="help">Paste your Gumroad checkout link here.</span>
+          </div>
+          <div class="field">
+            <label>Product image</label>
+            <input id="p-image-file" type="file" accept="image/*">
+            <span class="help">Or enter a path manually:</span>
+            <input id="p-image" type="text" placeholder="assets/images/product-1.svg">
+            <div id="p-image-preview" style="margin-top:10px; max-width: 160px;"></div>
+          </div>
+          <div class="field">
+            <label>SEO meta title</label>
+            <input id="p-meta-title" type="text">
+          </div>
+          <div class="field">
+            <label>SEO meta description</label>
+            <textarea id="p-meta-description"></textarea>
+          </div>
+          <div class="field">
+            <label><input type="checkbox" id="p-featured"> Mark as featured (shows in homepage hero)</label>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" id="save-product">Save</button>
+            <button class="btn btn-ghost btn-sm" id="cancel-product">Cancel</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOG TAB -->
+      <section class="tab-panel" data-panel="blog" style="display:none;">
+        <h1 style="font-size: 1.8rem;">Blog posts</h1>
+        <p class="muted">Publish articles like "How to Get a Baby to Sleep Faster". Posts support basic HTML in the content field.</p>
+
+        <div class="admin-toolbar">
+          <button class="btn btn-accent btn-sm" id="add-post">+ New post</button>
+          <button class="btn btn-ghost btn-sm" id="export-blog">Export blog.json</button>
+        </div>
+
+        <div id="blog-list" class="admin-list"></div>
+
+        <div id="post-editor" class="admin-card" style="display:none; margin-top: 24px;">
+          <h2 style="font-size: 1.3rem;">Edit post</h2>
+          <div class="field">
+            <label>Title</label>
+            <input id="b-title" type="text">
+          </div>
+          <div class="field">
+            <label>Excerpt</label>
+            <textarea id="b-excerpt"></textarea>
+          </div>
+          <div class="field">
+            <label>Date (YYYY-MM-DD)</label>
+            <input id="b-date" type="date">
+          </div>
+          <div class="field">
+            <label>Author</label>
+            <input id="b-author" type="text" value="Peaceful Nights Guide">
+          </div>
+          <div class="field">
+            <label>Tags (comma separated)</label>
+            <input id="b-tags" type="text" placeholder="baby sleep, bedtime">
+          </div>
+          <div class="field">
+            <label>Cover image</label>
+            <input id="b-image-file" type="file" accept="image/*">
+            <input id="b-image" type="text" placeholder="assets/images/blog-1.svg" style="margin-top:6px;">
+            <div id="b-image-preview" style="margin-top:10px; max-width: 220px;"></div>
+          </div>
+          <div class="field">
+            <label>Content (HTML)</label>
+            <textarea id="b-content" style="min-height: 280px; font-family: ui-monospace, monospace;"></textarea>
+            <span class="help">Use &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt; tags for structure.</span>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" id="save-post">Save</button>
+            <button class="btn btn-ghost btn-sm" id="cancel-post">Cancel</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETTINGS TAB -->
+      <section class="tab-panel" data-panel="settings" style="display:none;">
+        <h1 style="font-size: 1.8rem;">Site settings</h1>
+        <p class="muted">Update your hero text, about section, testimonials, FAQs, social links, and email signup.</p>
+
+        <div class="admin-toolbar">
+          <button class="btn btn-primary btn-sm" id="save-settings">Save settings</button>
+          <button class="btn btn-ghost btn-sm" id="export-settings">Export config.json</button>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">Hero section</h2>
+          <div class="field"><label>Eyebrow</label><input id="s-hero-eyebrow" type="text"></div>
+          <div class="field"><label>Headline</label><input id="s-hero-headline" type="text"></div>
+          <div class="field"><label>Subheadline</label><textarea id="s-hero-sub"></textarea></div>
+          <div class="field"><label>Primary CTA text</label><input id="s-hero-cta" type="text"></div>
+          <div class="field"><label>Primary CTA link</label><input id="s-hero-cta-link" type="text"></div>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">About section</h2>
+          <div class="field"><label>Headline</label><input id="s-about-headline" type="text"></div>
+          <div class="field"><label>Body</label><textarea id="s-about-body" style="min-height:140px;"></textarea></div>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">Social media links</h2>
+          <p class="help" style="margin-bottom:12px;">Leave blank to hide a social icon.</p>
+          <div class="field"><label>TikTok</label><input id="s-social-tiktok" type="url"></div>
+          <div class="field"><label>X / Twitter</label><input id="s-social-twitter" type="url"></div>
+          <div class="field"><label>Instagram</label><input id="s-social-instagram" type="url"></div>
+          <div class="field"><label>Facebook</label><input id="s-social-facebook" type="url"></div>
+          <div class="field"><label>YouTube</label><input id="s-social-youtube" type="url"></div>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">Email signup</h2>
+          <div class="field"><label>Heading</label><input id="s-email-heading" type="text"></div>
+          <div class="field"><label>Subheading</label><textarea id="s-email-sub"></textarea></div>
+          <div class="field">
+            <label>Form action URL (Mailchimp or ConvertKit)</label>
+            <input id="s-email-action" type="url">
+            <span class="help">Mailchimp: Audience → Signup forms → Embedded forms → copy form action URL. ConvertKit: Form → Embed → HTML → copy form action.</span>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">Testimonials</h2>
+          <div id="s-testimonials"></div>
+          <button class="btn btn-ghost btn-sm" id="add-testimonial">+ Add testimonial</button>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">FAQs</h2>
+          <div id="s-faqs"></div>
+          <button class="btn btn-ghost btn-sm" id="add-faq">+ Add FAQ</button>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">SEO</h2>
+          <div class="field"><label>Site meta title</label><input id="s-seo-title" type="text"></div>
+          <div class="field"><label>Site meta description</label><textarea id="s-seo-desc"></textarea></div>
+          <div class="field"><label>Keywords (comma separated)</label><input id="s-seo-keywords" type="text"></div>
+        </div>
+      </section>
+
+      <!-- MEDIA TAB -->
+      <section class="tab-panel" data-panel="media" style="display:none;">
+        <h1 style="font-size: 1.8rem;">Media uploads</h1>
+        <p class="muted">Upload images, videos, or PDFs to use in your products and blog posts. Files download to your computer — save them into <code>assets/images/</code> or <code>assets/files/</code> in your site folder.</p>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">Upload media</h2>
+          <div class="field">
+            <label>Pick a file (image, video, or PDF)</label>
+            <input id="media-file" type="file" accept="image/*,video/*,application/pdf">
+          </div>
+          <button class="btn btn-primary btn-sm" id="process-media">Process & download</button>
+          <div id="media-preview" style="margin-top: 20px;"></div>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">How to use uploaded files</h2>
+          <ol style="padding-left: 20px;">
+            <li>After downloading the optimized file, drop it into your site's <code>assets/images/</code> folder (for images) or <code>assets/files/</code> folder (for PDFs and videos).</li>
+            <li>Reference it in a product or blog post using the path, e.g. <code>assets/images/my-photo.jpg</code>.</li>
+            <li>Re-upload your site to your host (Netlify, Vercel, GitHub Pages, or wherever it lives).</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- EXPORT TAB -->
+      <section class="tab-panel" data-panel="export" style="display:none;">
+        <h1 style="font-size: 1.8rem;">Export & deploy</h1>
+        <p class="muted">Export your edited JSON files. Replace the matching files in your site's <code>/data/</code> folder, then redeploy.</p>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">Download updated data</h2>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-accent btn-sm" id="export-all-products">products.json</button>
+            <button class="btn btn-accent btn-sm" id="export-all-blog">blog.json</button>
+            <button class="btn btn-accent btn-sm" id="export-all-config">config.json</button>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">Deploy workflow</h2>
+          <ol style="padding-left: 20px;">
+            <li>Make all edits in the admin (changes save in your browser).</li>
+            <li>Click <strong>Export</strong> on each section.</li>
+            <li>Replace the matching files inside your site's <code>/data/</code> folder.</li>
+            <li>If your site is on Netlify, drag-and-drop the updated folder onto your Netlify dashboard. On Vercel/GitHub Pages, commit and push.</li>
+            <li>The site rebuilds in seconds.</li>
+          </ol>
+          <p class="muted" style="margin-top: 16px;"><strong>Pro tip:</strong> If you connect this folder to a GitHub repo and enable Netlify CMS (Decap CMS), edits will publish automatically — see README.</p>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size:1.2rem;">Reset local edits</h2>
+          <p class="muted">If you want to discard your unsaved edits and reload from the live site files:</p>
+          <button class="btn btn-danger btn-sm" id="reset-local">Reset all local edits</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/admin.js"></script>
+  <script src="../assets/js/admin-ui.js"></script>
+</body>
+</html>

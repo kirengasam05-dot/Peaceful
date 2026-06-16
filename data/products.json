@@ -1,0 +1,26 @@
+{
+  "products": [
+    {
+      "id": "baby-sleep-guide",
+      "title": "The Peaceful Nights Sleep Guide",
+      "tagline": "Help your baby sleep through the night — gently, without tears.",
+      "description": "A complete, step-by-step PDF guide built from real parenting experience. Inside you'll find calming bedtime routines, a 7-day sleep reset plan, age-by-age schedules from newborn to toddler, and gentle techniques for night wakings. Written for tired parents who want a kind, practical path to peaceful nights.",
+      "bullets": [
+        "Step-by-step bedtime routine that works in any home",
+        "7-day sleep reset plan you can start tonight",
+        "Age-by-age schedules: newborn, 3–6 months, 6–12 months, toddler",
+        "Gentle, no-cry techniques for night wakings",
+        "Printable checklists and sleep trackers"
+      ],
+      "price": "$9.99",
+      "image": "assets/images/product-1.svg",
+      "gumroadUrl": "https://peacefulnightsguide.gumroad.com/l/oxhjdh",
+      "pageSlug": "baby-sleep-guide",
+      "featured": true,
+      "seo": {
+        "metaTitle": "The Peaceful Nights Sleep Guide — Baby & Toddler Sleep PDF",
+        "metaDescription": "A gentle, no-cry PDF sleep guide for tired parents. Routines, schedules, and a 7-day reset plan for babies and toddlers."
+      }
+    }
+  ]
+}

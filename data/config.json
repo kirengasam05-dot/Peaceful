@@ -1,0 +1,80 @@
+{
+  "site": {
+    "name": "Peaceful Nights Guide",
+    "tagline": "Gentle sleep guides for tired parents.",
+    "url": "https://peacefulnightsguide.com",
+    "email": "hello@peacefulnightsguide.com"
+  },
+  "hero": {
+    "eyebrow": "For tired parents",
+    "headline": "Peaceful nights are possible.",
+    "subheadline": "Gentle, practical PDF guides that help your baby or toddler sleep — without tears, without guesswork.",
+    "ctaText": "Get the Sleep Guide",
+    "ctaLink": "#products",
+    "secondaryCtaText": "Read the free tips",
+    "secondaryCtaLink": "/blog.html"
+  },
+  "about": {
+    "title": "About me",
+    "headline": "I built this for the parents I used to be.",
+    "body": "After months of broken sleep with my first child, I learned that small, consistent routines made the biggest difference. Peaceful Nights Guide is where I share what actually worked — written in plain language, tested in real homes, and designed for parents who are too tired to read a textbook. Every guide is a PDF you can download tonight and start using before bedtime.",
+    "image": "assets/images/about.svg"
+  },
+  "testimonials": [
+    {
+      "name": "Sarah M.",
+      "role": "Mom of a 9-month-old",
+      "quote": "We followed the 7-day plan and by night four my son was sleeping through. I cried — the good kind."
+    },
+    {
+      "name": "James & Priya",
+      "role": "First-time parents",
+      "quote": "Calm, clear, no judgment. It felt like a friend walking us through it. Worth every cent."
+    },
+    {
+      "name": "Amelia R.",
+      "role": "Mom of twin toddlers",
+      "quote": "The routines worked for both of mine, even though they have very different temperaments. Lifesaver."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What age is the guide for?",
+      "answer": "The main guide covers newborn through age 3, with separate sections for each stage. You can start using it at any age."
+    },
+    {
+      "question": "Is this a 'cry it out' method?",
+      "answer": "No. Every technique inside is gentle and responsive. The goal is calmer nights without forcing tears."
+    },
+    {
+      "question": "How do I receive the guide?",
+      "answer": "After checkout on Gumroad, you'll get an instant PDF download. You can read it on your phone, tablet, or print it."
+    },
+    {
+      "question": "Do you offer refunds?",
+      "answer": "Yes. If the guide doesn't help your family within 14 days, email me and I'll refund you. No hard feelings."
+    },
+    {
+      "question": "Will it work if my child has been sleeping badly for months?",
+      "answer": "Yes. Many parents in our community started after months of broken sleep. The 7-day reset is specifically designed for that situation."
+    }
+  ],
+  "social": {
+    "tiktok": "https://www.tiktok.com/@peacefulnightsguide",
+    "twitter": "https://x.com/peacefulnights",
+    "instagram": "https://www.instagram.com/peacefulnightsguide",
+    "facebook": "https://www.facebook.com/peacefulnightsguide",
+    "youtube": "https://www.youtube.com/@peacefulnightsguide"
+  },
+  "email": {
+    "provider": "mailchimp",
+    "formAction": "https://peacefulnightsguide.us1.list-manage.com/subscribe/post?u=YOUR_USER_ID&id=YOUR_LIST_ID",
+    "heading": "Get free parenting tips",
+    "subheading": "Short, useful emails on sleep and routines. One a week. Unsubscribe anytime."
+  },
+  "seo": {
+    "metaTitle": "Peaceful Nights Guide — Gentle Sleep Guides for Babies & Toddlers",
+    "metaDescription": "Gentle PDF sleep guides for tired parents. Bedtime routines, sleep schedules, and a 7-day reset plan for babies and toddlers.",
+    "keywords": "parenting, baby sleep, toddler sleep, bedtime routines, parenting guides, digital parenting products, baby sleep training, gentle sleep methods, newborn sleep, sleep schedule"
+  }
+}

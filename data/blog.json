@@ -1,0 +1,37 @@
+{
+  "posts": [
+    {
+      "id": "baby-sleep-faster",
+      "title": "How to Get a Baby to Sleep Faster",
+      "slug": "how-to-get-a-baby-to-sleep-faster",
+      "excerpt": "Five small changes that quietly cut bedtime in half — without a strict program or any tears.",
+      "date": "2025-05-12",
+      "author": "Peaceful Nights Guide",
+      "image": "assets/images/blog-1.svg",
+      "tags": ["baby sleep", "bedtime"],
+      "content": "<p>If putting your baby down takes an hour every night, you are not alone — and the fix is usually smaller than parents expect. Here are five changes that move the needle without forcing anything.</p><h2>1. Move bedtime earlier, not later</h2><p>Overtired babies fight sleep harder. Try moving bedtime fifteen to thirty minutes earlier for three nights and notice the difference.</p><h2>2. Dim the lights an hour before</h2><p>Bright light suppresses melatonin. Lamps and warm light help signal that the day is winding down.</p><h2>3. Keep the routine boring</h2><p>Bath, pyjamas, feed, story, bed — every night, same order. Predictability is calming for small nervous systems.</p><h2>4. Watch for wake windows</h2><p>Babies sleep best when they go down before they are overtired. Learn your baby's window and aim a few minutes inside it.</p><h2>5. Stop adding new tricks</h2><p>If a routine is mostly working, give it a week before changing anything. Consistency builds the habit.</p><p>If you want the full sequence laid out by age, that is exactly what the Peaceful Nights Sleep Guide covers.</p>"
+    },
+    {
+      "id": "bedtime-routine-checklist",
+      "title": "Bedtime Routine Checklist",
+      "slug": "bedtime-routine-checklist",
+      "excerpt": "A printable, step-by-step list you can stick on the fridge — so bedtime runs itself even on hard days.",
+      "date": "2025-05-20",
+      "author": "Peaceful Nights Guide",
+      "image": "assets/images/blog-2.svg",
+      "tags": ["bedtime routines", "checklist"],
+      "content": "<p>A routine works because it is predictable. Use this checklist as a starting point and adjust the order to fit your home.</p><h2>One hour before bed</h2><ul><li>Dim the main lights</li><li>Quiet down the volume in the home</li><li>Last small snack or feed</li></ul><h2>Thirty minutes before bed</h2><ul><li>Warm bath (three to five minutes is enough)</li><li>Pyjamas and nappy</li><li>Brush teeth (or wipe gums)</li></ul><h2>Ten minutes before bed</h2><ul><li>One short book in the bedroom</li><li>A short lullaby or calming song</li><li>Final feed or water</li></ul><h2>Bedtime</h2><ul><li>Sleep sack or blanket</li><li>White noise on</li><li>Goodnight phrase — the same one every night</li><li>Out of the room while baby is calm but awake</li></ul><p>Print this. Stick it where you can see it. On a hard day, you will not have to think — you will just follow the list.</p>"
+    },
+    {
+      "id": "toddler-sleep-mistakes",
+      "title": "Common Toddler Sleep Mistakes (and how to fix them)",
+      "slug": "common-toddler-sleep-mistakes",
+      "excerpt": "The four toddler bedtime habits that almost always backfire — and the gentle fix for each.",
+      "date": "2025-06-02",
+      "author": "Peaceful Nights Guide",
+      "image": "assets/images/blog-3.svg",
+      "tags": ["toddler sleep", "mistakes"],
+      "content": "<p>Toddlers are not babies, and they are not small adults. They are negotiators with limited words and a lot of feelings. These four habits make bedtime harder than it needs to be.</p><h2>1. Letting bedtime drift later</h2><p>Toddlers seem to have endless energy at night, but late bedtimes usually cause more wake-ups, not fewer. Hold the line on a consistent time.</p><h2>2. Negotiating from the doorway</h2><p>Once you start saying yes from the doorway, the doorway becomes the negotiation zone. Stay calm, stay short, and exit.</p><h2>3. Skipping the wind-down</h2><p>Running, tickling, or screens right before bed wake the brain back up. Quiet activities only in the last thirty minutes.</p><h2>4. Trying three new things at once</h2><p>If something is not working, change one thing and give it a week. Parents who change everything every night never know what actually helped.</p><p>The full toddler section of the Peaceful Nights Sleep Guide has scripts you can use word-for-word at the doorway.</p>"
+    }
+  ]
+}
