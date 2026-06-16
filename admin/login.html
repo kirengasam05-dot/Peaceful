@@ -49,8 +49,15 @@
         btn.disabled = false;
       }
     });
-    // If already logged in, redirect
-    if (isAdminLoggedIn()) location.href = 'dashboard.html';
+    // If already logged in with a still-valid session, skip to the
+    // dashboard. If the token is stale, clear it and stay here so the
+    // login form is shown (avoids redirect loops).
+    if (isAdminLoggedIn()) {
+      verifyAdminSession().then((ok) => {
+        if (ok) location.href = 'dashboard.html';
+        else clearAdminSession();
+      });
+    }
   </script>
 </body>
 </html>

@@ -110,6 +110,11 @@ app.post('/api/login', (req, res) => {
   res.status(401).json({ error: 'Invalid username or password.' });
 });
 
+// Lets the admin UI confirm the saved token is still valid.
+app.get('/api/session', requireAuth, (req, res) => {
+  res.json({ ok: true });
+});
+
 app.get('/api/products', wrap(async (req, res) => {
   res.json({ products: await store.list() });
 }));

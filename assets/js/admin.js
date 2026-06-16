@@ -57,6 +57,7 @@ async function apiSend(method, url, body) {
     body: body ? JSON.stringify(body) : undefined
   });
   if (res.status === 401) {
+    clearAdminSession();
     showToast('Session expired — please sign in again');
     setTimeout(() => (location.href = 'login.html'), 1200);
     throw new Error('unauthorized');
@@ -74,12 +75,30 @@ function adminLogout() {
   location.href = 'login.html';
 }
 
+function clearAdminSession() {
+  localStorage.removeItem(SESSION_KEY);
+}
+
 function requireAdmin() {
   if (!isAdminLoggedIn()) {
+    clearAdminSession();
     location.href = 'login.html';
     return false;
   }
   return true;
+}
+
+// Confirm with the server that the stored token is genuinely valid.
+// If not, clear it so the login page won't bounce us straight back.
+async function verifyAdminSession() {
+  try {
+    const res = await fetch('../api/session', {
+      headers: { 'Authorization': 'Bearer ' + (getAdminToken() || '') }
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 // ---- Data IO ----

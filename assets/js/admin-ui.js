@@ -6,7 +6,16 @@
 if (!requireAdmin()) {
   // Stop — requireAdmin already redirected
 } else {
-  initAdminUI();
+  // Double-check the token with the server before showing the dashboard.
+  // If it's stale, clear it and go to login (prevents redirect loops).
+  verifyAdminSession().then((ok) => {
+    if (!ok) {
+      clearAdminSession();
+      location.href = 'login.html';
+    } else {
+      initAdminUI();
+    }
+  });
 }
 
 function initAdminUI() {
