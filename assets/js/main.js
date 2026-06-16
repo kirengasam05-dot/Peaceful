@@ -76,6 +76,18 @@ function imageMarkup(path, alt) {
   return `<img src="${src}" alt="${escapeHTML(alt)}" loading="lazy">`;
 }
 
+// Build the "Buy now" button. When the product has a store/checkout
+// link it opens that in a new tab for payment; when it doesn't, the
+// button is disabled so visitors never hit a dead link.
+function buyButton(product, sizeClass = '') {
+  const url = (product.gumroadUrl || '').trim();
+  const cls = `btn btn-accent ${sizeClass}`.trim();
+  if (!url) {
+    return `<button class="${cls}" disabled title="No checkout link set yet">Buy now</button>`;
+  }
+  return `<a class="${cls}" href="${escapeHTML(url)}" target="_blank" rel="noopener">Buy now</a>`;
+}
+
 function setMeta(name, content, attr = 'name') {
   if (!content) return;
   let el = document.querySelector(`meta[${attr}="${name}"]`);
@@ -193,7 +205,7 @@ async function renderProducts() {
             <span class="price-note">Instant PDF download</span>
           </div>
           <div class="actions" style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a class="btn btn-accent btn-lg" href="${escapeHTML(featured.gumroadUrl)}" target="_blank" rel="noopener">Buy now</a>
+            ${buyButton(featured, 'btn-lg')}
             <a class="btn btn-ghost btn-lg" href="${BASE}pages/product.html?id=${encodeURIComponent(featured.id)}">Read more</a>
           </div>
         </div>
@@ -210,7 +222,7 @@ async function renderProducts() {
         <p class="tagline">${escapeHTML(p.tagline)}</p>
         <div class="price">${escapeHTML(p.price)}</div>
         <div class="actions">
-          <a class="btn btn-accent" href="${escapeHTML(p.gumroadUrl)}" target="_blank" rel="noopener">Buy now</a>
+          ${buyButton(p)}
           <a class="btn btn-ghost" href="${BASE}pages/product.html?id=${encodeURIComponent(p.id)}">Details</a>
         </div>
       </article>
@@ -238,7 +250,7 @@ async function renderProducts() {
             <span class="price-note">Instant PDF download via Gumroad</span>
           </div>
           <div class="actions" style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a class="btn btn-accent btn-lg" href="${escapeHTML(product.gumroadUrl)}" target="_blank" rel="noopener">Buy now</a>
+            ${buyButton(product, 'btn-lg')}
             <a class="btn btn-ghost btn-lg" href="${BASE}index.html">Back to home</a>
           </div>
         </div>
