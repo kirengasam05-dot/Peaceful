@@ -1,8 +1,13 @@
+databases:
+  - name: peaceful-nights-db
+    databaseName: peaceful_nights
+    user: peaceful_nights
+
 services:
   - type: web
     name: peaceful-nights-guide
     runtime: node
-    plan: starter            # a paid plan is required for a persistent disk
+    plan: starter
     buildCommand: npm install
     startCommand: node server.js
     envVars:
@@ -10,9 +15,7 @@ services:
         sync: false           # set this in the Render dashboard
       - key: ADMIN_PASSWORD
         sync: false           # set this in the Render dashboard
-      - key: DATA_DIR
-        value: /var/data
-    disk:
-      name: data
-      mountPath: /var/data    # database file lives here, survives redeploys
-      sizeGB: 1
+      - key: DATABASE_URL     # provided automatically by the database above
+        fromDatabase:
+          name: peaceful-nights-db
+          property: connectionString
