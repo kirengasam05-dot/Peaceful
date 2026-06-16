@@ -23,8 +23,22 @@ const PORT = process.env.PORT || 3000;
 
 // Where the database file lives. On Render this points at a
 // persistent disk (e.g. /var/data) so data survives redeploys.
-const DATA_DIR = process.env.DATA_DIR || path.join(ROOT, '.data');
-fs.mkdirSync(DATA_DIR, { recursive: true });
+// If that folder can't be created/written (e.g. no disk attached),
+// we fall back to a project-local folder so the app still runs —
+// but note that fallback storage is wiped on every redeploy.
+const FALLBACK_DIR = path.join(ROOT, '.data');
+let DATA_DIR = process.env.DATA_DIR || FALLBACK_DIR;
+try {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+} catch (err) {
+  console.warn(
+    `Could not use DATA_DIR "${DATA_DIR}" (${err.code}). ` +
+    `Falling back to "${FALLBACK_DIR}". ` +
+    `Attach a persistent disk at that path for data that survives redeploys.`
+  );
+  DATA_DIR = FALLBACK_DIR;
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
 const DB_FILE = path.join(DATA_DIR, 'products.db.json');
 
 // Admin credentials come from environment variables in production.
